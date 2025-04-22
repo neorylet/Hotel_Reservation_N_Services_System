@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Task List</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -12,53 +12,57 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Task List</h1>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-6xl mx-auto mt-10 px-6 py-8 bg-white shadow-xl rounded-2xl">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold tracking-tight">📝 Task List</h1>
+            <a href="{{ route('tasks.create') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg shadow transition">
+                ➕ Create Task
+            </a>
+        </div>
 
         @if(session('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded mb-4" role="alert">
-                <strong class="font-bold">Success!</strong>
-                <span class="block sm:inline">{{ session('success') }}</span>
+            <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-md">
+                <strong>Success:</strong> {{ session('success') }}
             </div>
         @endif
 
-        <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Create New Task</a>
-
-        <div class="overflow-x-auto">
-            <table class="min-w-full leading-normal shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-200 text-gray-700">
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="min-w-full text-sm">
+                <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
                     <tr>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Title</th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Description</th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Completed</th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-4 text-left">Title</th>
+                        <th class="px-6 py-4 text-left">Description</th>
+                        <th class="px-6 py-4 text-left">Completed</th>
+                        <th class="px-6 py-4 text-left">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white">
+                <tbody class="bg-white divide-y divide-gray-100">
                     @foreach($tasks as $task)
-                        <tr>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">{{ $task->title }}</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">{{ $task->description }}</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">{{ $task->is_completed ? 'Yes' : 'No' }}</td>
-                            <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                <div class="flex space-x-2">
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded text-sm">View</a>
-                                    <a href="{{ route('tasks.edit', $task->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded text-sm">Edit</a>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded text-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 font-medium text-gray-900">{{ $task->title }}</td>
+                        <td class="px-6 py-4">{{ $task->description }}</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full {{ $task->is_completed ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                {{ $task->is_completed ? 'Yes' : 'No' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center space-x-2">
+                                <a href="{{ route('tasks.show', $task->id) }}" class="text-indigo-600 hover:text-indigo-800 px-3 py-1 rounded hover:bg-indigo-100 transition text-sm font-medium">View</a>
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="text-yellow-600 hover:text-yellow-800 px-3 py-1 rounded hover:bg-yellow-100 transition text-sm font-medium">Edit</a>
+                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 px-3 py-1 rounded hover:bg-red-100 transition text-sm font-medium">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Yf9c6wZ81z5Wpd+n4P4C5yv7d9CZEfWi6y+C6f7Fj6L6kkz9v9egyt6Jj8i5P6nBvXU9xC6qOPnzFeg==" crossorigin="anonymous"></script>
 </body>
 </html>
