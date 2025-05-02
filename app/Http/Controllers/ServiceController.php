@@ -9,7 +9,18 @@ use Illuminate\Support\Facades\Storage;
 class ServiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the hotel services.
+     */
+    public function displayHotelServices()
+    {
+        // Fetch all services from the database
+        $services = Service::all();
+
+        return view('hotel.hotelservices', compact('services'));
+    }
+
+    /**
+     * Display a listing of the services.
      */
     public function index()
     {
@@ -18,7 +29,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new service.
      */
     public function create()
     {
@@ -26,7 +37,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created service in storage.
      */
     public function store(Request $request)
     {
@@ -50,7 +61,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified service.
      */
     public function show(Service $service)
     {
@@ -58,7 +69,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified service.
      */
     public function edit(Service $service)
     {
@@ -66,7 +77,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified service in storage.
      */
     public function update(Request $request, Service $service)
     {
@@ -94,10 +105,11 @@ class ServiceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified service from storage.
      */
     public function destroy(Service $service)
     {
+        // Delete service front image if it exists
         if ($service->service_front_image && Storage::disk('public')->exists($service->service_front_image)) {
             Storage::disk('public')->delete($service->service_front_image);
         }
@@ -106,4 +118,31 @@ class ServiceController extends Controller
 
         return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
     }
+
+    /**
+     * Display the hotel menu with different categories.
+     */
+    public function displayHotelMenu()
+    {
+        // Get services by their sub-type
+        $mains = Service::where('service_sub_type', 'main')->get();
+        $desserts = Service::where('service_sub_type', 'dessert')->get();
+        $drinks = Service::where('service_sub_type', 'drink')->get();
+        
+        // Pass these variables to the view
+        return view('hotel.hotelservices', compact('mains', 'desserts', 'drinks'));
+    }
+
+    public function displayHotelMenuOnHome()
+{
+    $mains = Service::where('service_sub_type', 'main')->get();
+    $desserts = Service::where('service_sub_type', 'dessert')->get();
+    $drinks = Service::where('service_sub_type', 'drink')->get();
+
+    
+    return view('hotel.hotelhome', compact('mains', 'desserts', 'drinks'));
+}
+
+
+    
 }

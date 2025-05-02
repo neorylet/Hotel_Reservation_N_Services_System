@@ -41,7 +41,7 @@
                     <div class="nav-links">
                         <a href="/hotelhome">Home</a>
                         <a href="/hotelrooms">Rooms</a>
-                        <a href="/services">Services</a>
+                        <a href="/hotelservices">Services</a>
                         <a href="/hotelprofile">Profile</a>
                         <a href="/contact">Contact</a>
                         <a href="/about">About</a>

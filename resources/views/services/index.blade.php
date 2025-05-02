@@ -33,7 +33,7 @@
             <a href="#" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-800 font-medium transition">
                 📄 Reservation Report
             </a>
-            <a href="#" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black font-medium transition">
+            <a href="/website" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black font-medium transition">
                 🌐 Manage Website
             </a>
         </nav>

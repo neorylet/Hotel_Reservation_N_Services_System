@@ -12,11 +12,11 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="h-screen overflow-hidden bg-gray-100 text-gray-800">
 
-<div class="min-h-screen flex">
+<div class="h-full flex">
 
-    <aside class="w-64 bg-white shadow-lg">
+    <aside class="w-64 bg-white shadow-lg h-full overflow-y-auto">
         <div class="p-6 text-xl font-bold border-b border-gray-200">
             🏢 Hotel Admin
         </div>
@@ -33,13 +33,13 @@
             <a href="#" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-purple-100 hover:text-purple-800 font-medium">
                 📄 Reservation Report
             </a>
-            <a href="#" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black font-medium">
+            <a href="/website" class="block px-4 py-3 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black font-medium">
                 🌐 Manage Website
             </a>
         </nav>
     </aside>
 
-    <main class="flex-1 p-10">
+    <main class="flex-1 overflow-y-auto p-10">
         @yield('content')
     </main>
 

@@ -41,7 +41,7 @@
                     <div class="nav-links">
                         <a href="/hotelhome">Home</a>
                         <a href="/hotelrooms">Rooms</a>
-                        <a href="/services">Services</a>
+                        <a href="/hotelservices">Services</a>
                         <a href="/hotelprofile">Profile</a>
                         <a href="/contact">Contact</a>
                         <a href="/about">About</a>
@@ -177,140 +177,81 @@
           </div>
         </div>
         <div class="food-menu-tabs" data-aos="fade">
-          <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active letter-spacing-2" id="mains-tab" data-toggle="tab" href="#mains" role="tab" aria-controls="mains" aria-selected="true">Mains</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link letter-spacing-2" id="desserts-tab" data-toggle="tab" href="#desserts" role="tab" aria-controls="desserts" aria-selected="false">Desserts</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link letter-spacing-2" id="drinks-tab" data-toggle="tab" href="#drinks" role="tab" aria-controls="drinks" aria-selected="false">Drinks</a>
-            </li>
-          </ul>
-          <div class="tab-content py-5" id="myTabContent">
-            
-            
-            <div class="tab-pane fade show active text-left" id="mains" role="tabpanel" aria-labelledby="mains-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱250</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Pork Sinigang</a></h3>
-                    <p class="text-white text-opacity-7"> A savory and sour soup made with pork, various vegetables (like kangkong, eggplant, and radish), and a tamarind-based broth. It's known for its comforting and refreshing taste.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3"> ₱280</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Adobo</a></h3>
-                    <p class="text-white text-opacity-7">A classic Filipino dish featuring meat (usually chicken or pork) marinated and braised in soy sauce, vinegar, garlic, and peppercorns. It's rich, flavorful, and often served with rice.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱600</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Kare-Kare</a></h3>
-                    <p class="text-white text-opacity-7">A rich and hearty stew made with oxtail, tripe, and vegetables, cooked in a thick peanut sauce. It's traditionally served with bagoong (shrimp paste) on the side.</p>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱500</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Lechon Kawali</a></h3>
-                    <p class="text-white text-opacity-7">Deep-fried pork belly that's crispy on the outside and tender on the inside. It's often served with a dipping sauce made of soy sauce, vinegar, and spices.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱800</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Crispy Pata</a></h3>
-                    <p class="text-white text-opacity-7">A very popular dish for celebrations, it is a whole pork leg that is deep fried until the skin is very crispy, and the meat is tender. It is often served with a soy vinegar dipping sauce.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱200</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Chorizo &amp; Egg Omelet</a></h3>
-                    <p class="text-white text-opacity-7">Si kiervy kay bbm supporter</p>
-                  </div>
-                </div>
-              </div>
-              
+    <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active letter-spacing-2" id="mains-tab" data-toggle="tab" href="#mains" role="tab">Mains</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link letter-spacing-2" id="desserts-tab" data-toggle="tab" href="#desserts" role="tab">Desserts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link letter-spacing-2" id="drinks-tab" data-toggle="tab" href="#drinks" role="tab">Drinks</a>
+        </li>
+    </ul>
 
-            </div> 
-            <div class="tab-pane fade text-left" id="desserts" role="tabpanel" aria-labelledby="desserts-tab">
-              <div class="row">
+    <div class="tab-content py-5" id="myTabContent">
+        {{-- Mains --}}
+        <div class="tab-pane fade show active text-left" id="mains" role="tabpanel">
+            <div class="row">
+                @forelse($mains as $main)
                 <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱150</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Halo-Halo</a></h3>
-                    <p class="text-white text-opacity-7">A beloved Filipino dessert with layers of sweetened beans, various fruits (like jackfruit and banana), jellies, shaved ice, and topped with leche flan, ube halaya (purple yam jam), and ice cream.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱200</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Leche Flan</a></h3>
-                    <p class="text-white text-opacity-7"> A rich and creamy caramel custard dessert, similar to crème caramel, but with a denser texture due to the use of egg yolks and condensed milk.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱80</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Turon</a></h3>
-                    <p class="text-white text-opacity-7">Sliced saba bananas and jackfruit strips wrapped in a spring roll wrapper and deep-fried until golden brown. Often sprinkled with sugar.</p>
-                  </div>
+                    <div class="food-menu mb-5">
+                        <div>
+                            <span class="d-block text-primary h4 mb-1">₱{{ $main->price }}</span>
+                            <h3 class="text-white" style="margin: 0;"><a href="#" class="text-white">{{ $main->service_name }}</a></h3>
+                        </div>
+                        <p class="text-white text-opacity-7 mt-3">{{ $main->service_description }}</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱180</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Biko</a></h3>
-                    <p class="text-white text-opacity-7">A sweet and sticky rice cake made with glutinous rice, coconut milk, and brown sugar. It's often topped with latik (coconut curd).</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱130</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Ginataang Bilo-Bilo</a></h3>
-                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱150</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Ube Halaya</a></h3>
-                    <p class="text-white text-opacity-7">A sweet jam made from boiled and mashed purple yam (ube), coconut milk, and butter. It's often served as a dessert on its own or as a topping for other desserts.</p>
-                  </div>
+                @empty
+                <div class="col-12">
+                    <p class="text-white">Nothing Listed</p>
                 </div>
-              </div>
+                @endforelse
             </div>
-            
-            <div class="tab-pane fade text-left" id="drinks" role="tabpanel" aria-labelledby="drinks-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱150</span>
-                    <h3 class="text-white"><a href="#" class="text-white">San Miguel</a></h3>
-                    <p class="text-white text-opacity-7">A classic Filipino lager with a crisp, refreshing taste. Perfect for any occasion.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱600</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Tanduay Rum</a></h3>
-                    <p class="text-white text-opacity-7">A smooth, premium rum made from sugarcane, ideal for cocktails or enjoyed on the rocks.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱120</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Ice Tea</a></h3>
-                    <p class="text-white text-opacity-7">A chilled and refreshing drink made from brewed tea, perfect for cooling off on a hot day.</p>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱50</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Soft Drinks</a></h3>
-                    <p class="text-white text-opacity-7">A sweet and creamy tea-based drink with milk and tapioca pearls, a popular Filipino treat.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱165</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Milk Tea</a></h3>
-                    <p class="text-white text-opacity-7">Coca-Cola, Diet Coke, or Sprite, the classic soft drinks everyone loves.</p>
-                  </div>
-                  <div class="food-menu mb-5">
-                    <span class="d-block text-primary h4 mb-3">₱170</span>
-                    <h3 class="text-white"><a href="#" class="text-white">Real Fruit Juice</a></h3>
-                    <p class="text-white text-opacity-7">Freshly squeezed fruit juices made with 100% real fruit for a refreshing and natural taste.</p>
-                  </div>
-                </div>
-              </div>
-            </div> 
-          </div>
         </div>
-      </div>
+
+        {{-- Desserts --}}
+        <div class="tab-pane fade text-left" id="desserts" role="tabpanel">
+            <div class="row">
+                @forelse($desserts as $dessert)
+                <div class="col-md-6">
+                    <div class="food-menu mb-5">
+                        <span class="d-block text-primary h4 mb-1">₱{{ $dessert->price }}</span>
+                        <h3 class="text-white"><a href="#" class="text-white">{{ $dessert->service_name }}</a></h3>
+                        <p class="text-white text-opacity-7">{{ $dessert->service_description }}</p>
+                    </div>
+                </div>
+                @empty
+                <div class="col-12">
+                    <p class="text-white">Nothing Listed</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+
+        {{-- Drinks --}}
+        <div class="tab-pane fade text-left" id="drinks" role="tabpanel">
+            <div class="row">
+                @forelse($drinks as $drink)
+                <div class="col-md-6">
+                    <div class="food-menu mb-5">
+                        <span class="d-block text-primary h4 mb-1">₱{{ $drink->price }}</span>
+                        <h3 class="text-white"><a href="#" class="text-white">{{ $drink->service_name }}</a></h3>
+                        <p class="text-white text-opacity-7">{{ $drink->service_description }}</p>
+                    </div>
+                </div>
+                @empty
+                <div class="col-12">
+                    <p class="text-white">Nothing Listed</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+
+    </div>
+</div>
+
     </section>
 
     <section class="section blog-post-entry bg-light" id="next">

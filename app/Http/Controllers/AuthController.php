@@ -8,18 +8,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Service;
+
 
 class AuthController extends Controller
 {
 
-    public function displayHotelRooms()
-    {
-        // Fetch all rooms from the database
-        $rooms = Room::all();
+    public function displayHotelMenuOnHome()
+{
+    $mains = Service::where('service_sub_type', 'main')->get();
+    $desserts = Service::where('service_sub_type', 'dessert')->get();
+    $drinks = Service::where('service_sub_type', 'drink')->get();
+
     
-        // Return the 'hotel.rooms' view with the rooms data
-        return view('hotel.hotelrooms', compact('rooms'));
-    }
+    return view('hotel.hotelhome', compact('mains', 'desserts', 'drinks'));
+}
     
     public function displayHotelHome()
     {
