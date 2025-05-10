@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
+    
     /**
      * Display a listing of the hotel services.
      */
@@ -18,6 +20,12 @@ class ServiceController extends Controller
 
         return view('hotel.hotelservices', compact('services'));
     }
+
+    public function confirm($id)
+{
+    $service = Service::findOrFail($id); // Assuming your model is named Service
+    return view('order.confirm', compact('service'));
+}
 
     /**
      * Display a listing of the services.
@@ -142,6 +150,54 @@ class ServiceController extends Controller
     
     return view('hotel.hotelhome', compact('mains', 'desserts', 'drinks'));
 }
+
+public function orderService(Request $request)
+{
+    // Validate the incoming data
+    $validated = $request->validate([
+        'service_id' => 'required|exists:services,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    // Get the logged-in user
+    $user = auth()->user();
+    if (!$user) {
+        return back()->with('error', 'You must be logged in.');
+    }
+
+    // Get the booking ID from the session
+    $bookingId = session('booking_id');
+    if (!$bookingId) {
+        return back()->with('error', 'No active booking found.');
+    }
+
+    // Find the service that the user is ordering
+    $service = Service::findOrFail($validated['service_id']);
+    
+    // Calculate the total price based on the quantity
+    $total = $service->price * $validated['quantity'];
+
+    // Create the order in the database
+    Order::create([
+        'user_id' => $user->id,
+        'booking_id' => $bookingId,
+        'service_id' => $service->id,
+        'customer_name' => $user->name,
+        'quantity' => $validated['quantity'],
+        'total_price' => $total,
+    ]);
+
+    return redirect()->route('hotel.hotelprofile')->with('success_order', 'Order placed successfully!');
+
+    
+}
+
+
+
+
+
+
+
 
 
     

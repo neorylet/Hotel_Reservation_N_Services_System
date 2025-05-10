@@ -32,6 +32,7 @@
     },
     "homepage": "https://github.com/neorylet/Hotel_Reservation_N_Services_System#readme",
     "dependencies": {
+        "aos": "^2.3.4",
         "bootstrap": "^5.3.5"
     }
 }

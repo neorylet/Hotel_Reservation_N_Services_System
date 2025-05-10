@@ -507,135 +507,8 @@ Room Towels Provided <br>
 
 
 
-
-<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true"
-     style="position: fixed; left: 0; top: 0; bottom: 0; margin: auto;">
-    <div class="modal-dialog" role="document" style="max-width: 600px; transform: none; margin: 20px; height: 100%;">
-        <div class="modal-content" style="height: 90%;">
-            <div class="modal-header">
-                <h2 class="modal-title">Room Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="roomImageCarousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="images/img_1.jpg" class="d-block w-100" alt="Room Image 1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/img_2.jpg" class="d-block w-100" alt="Room Image 2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/img_3.jpg" class="d-block w-100" alt="Room Image 3">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#roomImageCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#roomImageCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <p><br> Single Rooms: <br> Size: 48sm <br> Accomodates: only 1 person <br> Non Smoking, Hot Shower, AirCon, Cable TV, Free Wifi  </p>
-                <a href="/bookingModal" class="text-uppercase letter-spacing-1" data-toggle="modal" data-target="#bookingModal">Book Now</a>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Book now</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <section class="section pb-4">
-                    <div class="container">
-                    <section class="section pb-4">
-      <div class="container">
-       
-        <div class="row check-availabilty" id="next">
-          <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
-
-            <form action="#">
-              <div class="row">
-                <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
-                  <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
-                  <div class="field-icon-wrap">
-                    <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
-                  <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
-                  <div class="field-icon-wrap">
-                    <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
-                  <div class="row">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <label for="adults" class="font-weight-bold text-black">Adults</label>
-                      <div class="field-icon-wrap">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="adults" class="form-control">
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <label for="children" class="font-weight-bold text-black">Children</label>
-                      <div class="field-icon-wrap">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="children" class="form-control">
-                          <option value="">0</option>
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-3 align-self-end">
-                <a href="/payment" class="btn btn-primary btn-block text-white">Book Now</a>
-                </div>
-              </div>
-            </form>
-          </div>
-
-
-        </div>
-      </div>
-    </section>
-                        </div>
-                </section>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true" style="position: fixed; left: 0; top: 0; bottom: 0; margin: auto;">
-    <div class="modal-dialog" role="document" style="max-width: 720px; transform: none; margin: 20px; height: 90%;">
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; height: 90%;">
         <div class="modal-content" style="height: 100%;">
             <div class="modal-header">
                 <h2 class="modal-title" id="authModalLabel">Login</h2>
@@ -752,9 +625,9 @@ Room Towels Provided <br>
 </div>
 
 
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true" style="position: fixed; center: 0; top: 0; bottom: 0; margin: auto;">
-    <div class="modal-dialog" role="document" style="max-width: 720px; transform: none; margin: 20px; height: 100%;">
-        <div class="modal-content" style="height: 90%;">
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; height: 90%;">
+        <div class="modal-content" style="height: 100%;">
             <div class="modal-header">
                 <h2 class="modal-title">Register Now</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

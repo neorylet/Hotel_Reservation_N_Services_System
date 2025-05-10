@@ -11,6 +11,9 @@
               <li><a href="hotelhome">Home</a></li>
               <li>&bullet;</li>
               <li>Rooms</li>
+              @if ($errors->has('overlap'))
+            <div class="alert alert-danger">
+            {{ $errors->first('overlap') }}</div>@endif
             </ul>
           </div>
         </div>
@@ -53,9 +56,9 @@
       </div>
 
       <!-- Modal for this Room -->
-      <div class="modal fade" id="roomModal-{{ $room->id }}" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel-{{ $room->id }}" aria-hidden="true"
-     style="position: fixed; left: 0; top: 0; bottom: 0; margin: auto;">
-    <div class="modal-dialog" role="document" style="max-width: 700px; transform: none; margin: 20px; height: 104.5%;">
+      <div class="modal fade" id="roomModal-{{ $room->id }}" tabindex="-1" role="dialog"
+     aria-labelledby="roomModalLabel-{{ $room->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
         <div class="modal-content" style="height: 90%;">
             <div class="modal-header">
                 <h2 class="modal-title" id="roomModalLabel-{{ $room->id }}">{{ $room->room_name }}</h2>
@@ -70,7 +73,10 @@
                         <div class="carousel-inner">
                             @foreach(json_decode($room->room_images) as $index => $img)
                                 <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                    <img src="{{ asset('storage/' . $img) }}" class="d-block w-100" alt="Room Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $img) }}"
+                                         class="d-block w-100"
+                                         alt="Room Image {{ $index + 1 }}"
+                                         style="height: 400px; object-fit: cover;">
                                 </div>
                             @endforeach
                         </div>
@@ -92,12 +98,13 @@
                 </div>
 
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookingModal-{{ $room->id }}">
-          Book Now
-        </button>
+                    Book Now
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Booking Modal -->
 <div class="modal fade" id="bookingModal-{{ $room->id }}" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel-{{ $room->id }}" aria-hidden="true"
