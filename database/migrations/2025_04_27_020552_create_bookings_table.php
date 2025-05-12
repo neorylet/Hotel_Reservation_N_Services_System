@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,7 @@ class CreateBookingsTable extends Migration
             $table->date('checkout_date');
             $table->integer('guests');
             $table->string('payment_status')->default('pending');
+            $table->decimal('payment_amount', 10, 2)->nullable(); // Added payment_amount column
             $table->timestamps();
         });
     }

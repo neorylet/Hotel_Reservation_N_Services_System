@@ -18,4 +18,15 @@ class Service extends Model
         'service_front_image',
         'is_active',
     ];
+
+    public function bookings()
+{
+    return $this->belongsToMany(Booking::class, 'booking_service');
+}
+
+public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+    
 }

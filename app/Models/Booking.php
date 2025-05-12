@@ -19,6 +19,8 @@ class Booking extends Model
         'checkout_date',
         'guests',
         'payment_status',
+        'payment_amount', // Added payment_amount here
+
     ];
 
     // Define the relationship with User
@@ -30,4 +32,16 @@ class Booking extends Model
     public function room() {
         return $this->belongsTo(Room::class);
     }
+
+    public function services()
+{
+    return $this->belongsToMany(Service::class, 'booking_service', 'booking_id', 'service_id');
 }
+
+public function orders()
+{
+    return $this->hasMany(Order::class);
+}
+
+}
+

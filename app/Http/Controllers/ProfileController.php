@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -12,10 +13,15 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // Get all bookings for the logged-in user, including the related room data
-        $bookings = Booking::with('room') // eager load the room relation
-            ->where('user_id', $user->id)
-            ->orderBy('checkin_date', 'desc')
+        // Fetch bookings for the user with room details
+$bookings = Booking::with(['room', 'orders.service']) // room and nested service in orders
+    ->where('user_id', $user->id)
+    ->orderBy('checkin_date', 'desc')
+    ->get();
+
+        // Fetch orders for the user
+        $orders = Order::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Filter current booking (today is within check-in and check-out)
@@ -24,7 +30,7 @@ class ProfileController extends Controller
             return $booking->checkin_date <= $today && $booking->checkout_date >= $today;
         });
 
-        // Pass the bookings to the view
-        return view('hotel.hotelprofile', compact('user', 'bookings', 'currentBooking'));
+        // Pass the data to the view
+        return view('hotel.hotelprofile', compact('user', 'bookings', 'orders', 'currentBooking'));
     }
 }

@@ -18,4 +18,10 @@ class Order extends Model
         'total_price',
         'booking_id',
     ];
+
+    // Relationship with the Service model
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
 }

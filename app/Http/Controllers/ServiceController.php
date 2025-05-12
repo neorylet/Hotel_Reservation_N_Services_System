@@ -23,8 +23,8 @@ class ServiceController extends Controller
 
     public function confirm($id)
 {
-    $service = Service::findOrFail($id); // Assuming your model is named Service
-    return view('order.confirm', compact('service'));
+    $service = Service::findOrFail($id); 
+    return view('hotel.hotelservicesconfirm', compact('service'));
 }
 
     /**
@@ -151,6 +151,7 @@ class ServiceController extends Controller
     return view('hotel.hotelhome', compact('mains', 'desserts', 'drinks'));
 }
 
+
 public function orderService(Request $request)
 {
     // Validate the incoming data
@@ -194,6 +195,32 @@ public function orderService(Request $request)
 
 
 
+// In your controller
+public function submitOrder(Request $request)
+{
+    // Validate input
+    $validated = $request->validate([
+        'service_id' => 'required|exists:services,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    // Process the order (store it in the database)
+    $order = new Order();
+    $order->service_id = $validated['service_id'];
+    $order->quantity = $validated['quantity'];
+    $order->total_price = $this->calculateTotalPrice($validated['service_id'], $validated['quantity']);
+    $order->save();
+
+    // Redirect back with success message
+    return redirect()->route('service.menu')->with('success', 'Your order has been placed successfully!');
+}
+
+// Helper function to calculate the total price
+protected function calculateTotalPrice($serviceId, $quantity)
+{
+    $service = Service::find($serviceId);
+    return $service->price * $quantity;
+}
 
 
 

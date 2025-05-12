@@ -69,6 +69,7 @@ Route::post('/hotelrooms/{room_id}/book', [BookingController::class, 'store'])->
 Route::get('/order/confirm/{id}', [ServiceController::class, 'confirm'])->name('order.confirm');
 Route::post('/order/submit', [ServiceController::class, 'orderService'])->name('order.submit');
 
+
 // ---------------------------
 // Dashboard Routes
 // ---------------------------

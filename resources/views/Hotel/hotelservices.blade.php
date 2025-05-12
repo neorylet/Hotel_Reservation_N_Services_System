@@ -1,30 +1,6 @@
 @extends('layouts.hotel')
 
 @section('content')
-<header class="site-header">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-6 col-lg-4 site-logo">
-                <a href="">
-                    <img src="{{ asset('images/casalogo.jpg') }}" alt="Casa Leticia Boutique Hotel Logo" width="200" height="auto">
-                </a>
-            </div>
-            <div class="col-6 col-lg-8">
-                <nav role="navigation">
-                    <div class="nav-links">
-                        <a href="/hotelhome">Home</a>
-                        <a href="/hotelrooms">Rooms</a>
-                        <a href="/services">Services</a>
-                        <a href="/hotelprofile">Profile</a>
-                        <a href="/contact">Contact</a>
-                        <a href="/about">About</a>
-                        <a href="#" data-toggle="modal" data-target="#authModal">Log In</a>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
 
 <section class="site-hero inner-page overlay" style="background-image: url(images/hero_4.jpg)" data-stellar-background-ratio="0.5">
     <div class="container">
@@ -80,7 +56,7 @@
                                         <span class="d-block text-primary h4 mb-1">₱{{ $main->price }}</span>
                                         <h3 class="text-white">{{ $main->service_name }}</h3>
                                         <p class="d-block mb-2">{{ $main->service_description }}</p>
-                                        <a href="{{ route('order.confirm', $main->id) }}" class="text-center btn btn-sm btn-primary">Order</a>
+                                        <button type="button" class="text-center btn btn-sm btn-primary" onclick="showOrderModal({{ $main->id }}, '{{ $main->service_name }}', '{{ $main->service_description }}', '{{ $main->price }}')">Order</button>
                                     </div>
                                 </div>
                             </div>
@@ -99,10 +75,9 @@
                                         <span class="d-block text-primary h4 mb-1">₱{{ $dessert->price }}</span>
                                         <h3 class="text-white">{{ $dessert->service_name }}</h3>
                                         <p class="d-block mb-2">{{ $dessert->service_description }}</p>
-                                        <a href="{{ route('order.confirm', $dessert->id) }}" class="text-center btn btn-sm btn-primary">Order</a>
+                                        <button type="button" class="text-center btn btn-sm btn-primary" onclick="showOrderModal({{ $dessert->id }}, '{{ $dessert->service_name }}', '{{ $dessert->service_description }}', '{{ $dessert->price }}')">Order</button>
                                     </div>
                                 </div>
-
                             </div>
                         @endforeach
                     </div>
@@ -119,10 +94,9 @@
                                         <span class="d-block text-primary h4 mb-1">₱{{ $drink->price }}</span>
                                         <h3 class="text-white">{{ $drink->service_name }}</h3>
                                         <p class="d-block mb-2">{{ $drink->service_description }}</p>
-                                        <a href="{{ route('order.confirm', $drink->id) }}" class="text-center btn btn-sm btn-primary">Order</a>
-                                        </div>
+                                        <button type="button" class="text-center btn btn-sm btn-primary" onclick="showOrderModal({{ $drink->id }}, '{{ $drink->service_name }}', '{{ $drink->service_description }}', '{{ $drink->price }}')">Order</button>
+                                    </div>
                                 </div>
-
                             </div>
                         @endforeach
                     </div>
@@ -131,4 +105,47 @@
         </div>
     </div>
 </section>
+
+<!-- Order Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <h2 id="orderName">Service Name</h2>
+                    <p id="orderDescription">Service Description</p>
+                    <p id="orderPrice">₱0</p>
+
+                    <form action="{{ route('order.submit') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="service_id" id="serviceId">
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" required>
+                        <button type="submit" class="btn btn-primary btn-block">Confirm Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to set the modal content dynamically
+    function showOrderModal(serviceId, serviceName, serviceDescription, servicePrice) {
+        // Set the modal content
+        document.getElementById('orderName').innerText = serviceName;
+        document.getElementById('orderDescription').innerText = serviceDescription;
+        document.getElementById('orderPrice').innerText = '₱' + servicePrice;
+        document.getElementById('serviceId').value = serviceId;
+
+        // Show the modal
+        $('#orderModal').modal('show');
+    }
+</script>
+
 @endsection

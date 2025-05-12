@@ -25,16 +25,13 @@
   </head>
   <body>
     
-  <header class="site-header">
+<header class="site-header">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-6 col-lg-4 site-logo">
-            <div class="col-6 col-lg-4 site-logo">
-              <a href="">
-                <img src="{{ asset('images/casalogo.jpg') }}" alt="Casa Leticia Boutique Hotel Logo" width="200" height="auto">
-              </a>
-            </div>
-
+                <a href="">
+                    <img src="{{ asset('images/casalogo.jpg') }}" alt="Casa Leticia Boutique Hotel Logo" width="200" height="auto">
+                </a>
             </div>
             <div class="col-6 col-lg-8">
                 <nav role="navigation">
@@ -42,18 +39,30 @@
                         <a href="/hotelhome">Home</a>
                         <a href="/hotelrooms">Rooms</a>
                         <a href="/hotelservices">Services</a>
-                        <a href="/hotelprofile">Profile</a>
+
+                        <!-- Profile Button with Conditional Logic -->
+                        @if(Auth::check())
+                            <a href="/hotelprofile">Profile</a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#authModal" onclick="alert('Please log in first to view your profile')">Profile</a>
+                        @endif
+
                         <a href="/contact">Contact</a>
                         <a href="/about">About</a>
-                        <a href="#" data-toggle="modal" data-target="#authModal">Log In</a></div>
 
-                        
+                        <!-- Log In Button -->
+                        @if(Auth::check())
+                            <a href="/logout">Log Out</a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#authModal">Log In</a>
+                        @endif
                     </div>
                 </nav>
             </div>
         </div>
     </div>
 </header>
+
 
     <section class="site-hero overlay" style="background-image: url(images/hero_4a.jpg)" data-stellar-background-ratio="0.5">
       <div class="container">
@@ -506,10 +515,9 @@ Room Towels Provided <br>
 </div>
 
 
-
 <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; height: 90%;">
-        <div class="modal-content" style="height: 100%;">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; width: 100%;">
+        <div class="modal-content" style="max-height: none;">
             <div class="modal-header">
                 <h2 class="modal-title" id="authModalLabel">Login</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeAuthModal()">
@@ -530,7 +538,7 @@ Room Towels Provided <br>
                         </div>
                     @endif
                     <div class="register-header">
-                        <img src="{{ asset('images/Casa logo.png') }}" alt="Logo" class="register-logo" style="max-width: 100px; height: auto; margin-bottom: 10px;">
+                        <img src="{{ asset('images/CASA-LETICIA-BOUTIQUE-HOTEL.jpg') }}" alt="Logo" class="register-logo" style="max-width: 70px; height: auto; margin-bottom: 10px;">
                         <h4>Register</h4>
                     </div>
                     <form method="POST" action="{{ route('register.post') }}">
@@ -588,7 +596,7 @@ Room Towels Provided <br>
                         </div>
                     @endif
                     <div class="login-header">
-                        <img src="{{ asset('images/Casa logo.png') }}" alt="Logo" class="login-logo" style="max-width: 100px; height: auto; margin-bottom: 10px;">
+                        <img src="{{ asset('images/lo.jpg') }}" alt="Logo" class="login-logo" style="max-width: 70px; height: auto; margin-bottom: 10px;">
                         <h4>Login</h4>
                     </div>
                     <form method="POST" action="{{ route('login.post') }}">
@@ -615,7 +623,7 @@ Room Towels Provided <br>
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                         <div class="form-links text-center">
-                            <a href="#" data-toggle="modal" data-target="#registerModal">Don't have an account? Register</a>
+                            <a href="#" onclick="$('#authModal').modal('hide'); $('#registerModal').modal('show'); return false;">Don't have an account? Register</a>
                         </div>
                     </form>
                 </div>
@@ -625,17 +633,17 @@ Room Towels Provided <br>
 </div>
 
 
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; height: 90%;">
-        <div class="modal-content" style="height: 100%;">
-            <div class="modal-header">
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 720px; width: 100%; margin-top: 0vh;">
+    <div class="modal-content" style="max-height: none;">
+      <div class="modal-header">
                 <h2 class="modal-title">Register Now</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="modal-body" id="authModalBody">
+                <div class="modal-body" id="authModalBody" style="max-height: 70vh; overflow-y: auto;">
                     <div id="registrationForm">
                         @if(session()->has("register_success"))
                             <div class="alert alert-success">
@@ -649,7 +657,7 @@ Room Towels Provided <br>
                             </div>
                         @endif
                         <div class="register-header">
-                            <img src="{{ asset('images/Casa logo.png') }}" alt="Logo" class="register-logo" style="max-width: 100px; height: auto; margin-bottom: 10px;">
+                            <img src="{{ asset('images/lo.jpg') }}" alt="Logo" class="register-logo" style="max-width: 70px; height: auto; margin-bottom: 10px;">
                             <h4>Register</h4>
                         </div>
                         <form method="POST" action="{{ route('register.post') }}">
@@ -769,18 +777,7 @@ $(document).ready(function() {
     });
 
 
-
-    $(document).ready(function() {
-        $('#roomModal').on('shown.bs.modal', function () {
-        });
-    });
-
-    $(document).ready(function() {
-        $('#bookingModal').on('shown.bs.modal', function () {
-        });
-    });
-
     </script>
-
+    <script src="js/main.js"></script>
   </body>
 </html>

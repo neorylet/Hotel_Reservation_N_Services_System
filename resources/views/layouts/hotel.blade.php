@@ -8,32 +8,27 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
-\
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/aos.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
-    <link rel="stylesheet" href="css/fancybox.min.css">
     
-    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   </head>
   <body>
     
-  <header class="site-header">
+<header class="site-header">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-6 col-lg-4 site-logo">
-            <div class="col-6 col-lg-4 site-logo">
-              <a href="">
-                <img src="{{ asset('images/casalogo.jpg') }}" alt="Casa Leticia Boutique Hotel Logo" width="200" height="auto">
-              </a>
-            </div>
-
+                <a href="">
+                    <img src="{{ asset('images/casalogo.jpg') }}" alt="Casa Leticia Boutique Hotel Logo" width="200" height="auto">
+                </a>
             </div>
             <div class="col-6 col-lg-8">
                 <nav role="navigation">
@@ -41,18 +36,30 @@
                         <a href="/hotelhome">Home</a>
                         <a href="/hotelrooms">Rooms</a>
                         <a href="/hotelservices">Services</a>
-                        <a href="/hotelprofile">Profile</a>
+
+                        <!-- Profile Button with Conditional Logic -->
+                        @if(Auth::check())
+                            <a href="/hotelprofile">Profile</a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#authModal" onclick="alert('Please log in first to view your profile')">Profile</a>
+                        @endif
+
                         <a href="/contact">Contact</a>
                         <a href="/about">About</a>
-                        <a href="" data-toggle="modal" data-target="#authModal">Log In</a></div>
 
-                        
+                        <!-- Log In Button -->
+                        @if(Auth::check())
+                            <a href="/logout">Log Out</a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#authModal">Log In</a>
+                        @endif
                     </div>
                 </nav>
             </div>
         </div>
     </div>
 </header>
+
 
 <main>
     @yield('content')
