@@ -1,11 +1,18 @@
 @extends('layouts.dashboard')
+
 @section('content')
 <div class="max-w-4xl mx-auto bg-white p-8 shadow rounded-lg mt-10">
     <h1 class="text-2xl font-bold mb-6">🛏️ Room: {{ $room->room_name }}</h1>
 
     <p><strong>Type:</strong> {{ $room->room_type ?? '-' }}</p>
     <p><strong>Count:</strong> {{ $room->room_count ?? '0' }}</p>
-    <p><strong>Numbers:</strong> {{ $room->room_numbers }}</p>
+    <p><strong>Numbers:</strong> 
+        @if(is_array($room->room_numbers))
+            {{ implode(', ', $room->room_numbers) }}
+        @else
+            {{ $room->room_numbers }}
+        @endif
+    </p>
     <p><strong>Rate:</strong> ₱{{ number_format($room->room_rate, 2) }}</p>
     <p><strong>Capacity:</strong> {{ $room->capacity }}</p>
     <p><strong>Description:</strong> {{ $room->room_description }}</p>

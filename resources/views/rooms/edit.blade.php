@@ -27,7 +27,7 @@
 
         <div>
             <label class="block font-semibold">Room Numbers (comma-separated)</label>
-            <textarea name="room_numbers" class="w-full border rounded px-3 py-2">{{ old('room_numbers', $room->room_numbers) }}</textarea>
+            <textarea name="room_numbers" class="w-full border rounded px-3 py-2">{{ old('room_numbers', implode(',', $room->room_numbers ?? [])) }}</textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-6">

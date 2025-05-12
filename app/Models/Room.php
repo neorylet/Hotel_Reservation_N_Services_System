@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    // Add the room_name to the fillable array to allow mass assignment
     protected $fillable = [
         'room_name',
         'room_type',
@@ -16,7 +15,17 @@ class Room extends Model
         'capacity',
         'room_description',
         'room_front_image',
-        'room_images', // Add this if you're saving image paths as JSON
+        'room_images',
     ];
-}
 
+    protected $casts = [
+        'room_numbers' => 'array',      // Treat room_numbers as array
+        'room_images' => 'array',       // Optional: if saving multiple images
+    ];
+
+    // A Room has many Bookings
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+}

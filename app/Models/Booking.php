@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,10 +9,8 @@ class Booking extends Model
 {
     use HasFactory;
 
-    // Define the table associated with the model
     protected $table = 'bookings';
 
-    // Define the attributes that are mass assignable
     protected $fillable = [
         'user_id',
         'room_id',
@@ -19,29 +18,31 @@ class Booking extends Model
         'checkout_date',
         'guests',
         'payment_status',
-        'payment_amount', // Added payment_amount here
-
+        'payment_amount',
+        'room_number', // Storing the specific room number directly
     ];
 
-    // Define the relationship with User
-    public function user() {
+    // Relationship: Booking belongs to a User
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    // Define the relationship with Room
-    public function room() {
+    // Relationship: Booking belongs to a Room
+    public function room()
+    {
         return $this->belongsTo(Room::class);
     }
 
+    // Many-to-Many relationship with services
     public function services()
-{
-    return $this->belongsToMany(Service::class, 'booking_service', 'booking_id', 'service_id');
-}
+    {
+        return $this->belongsToMany(Service::class, 'booking_service', 'booking_id', 'service_id');
+    }
 
-public function orders()
-{
-    return $this->hasMany(Order::class);
+    // One-to-Many relationship with orders
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
-
-}
-

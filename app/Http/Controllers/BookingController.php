@@ -4,17 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
-use App\Models\Room; // Ensure Room model is imported
+use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
-    /**
-     * Store a new booking in the database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // Validate incoming data
@@ -25,20 +20,40 @@ class BookingController extends Controller
             'room_id' => 'required|exists:rooms,id',
         ]);
 
-        // Retrieve room rate
-        $room = Room::find($validatedData['room_id']);
-        $roomRate = $room->room_rate; // Using room_rate as the price per night
+        // Retrieve the room
+        $room = Room::findOrFail($validatedData['room_id']);
 
-        // Calculate the number of nights
-        $checkinDate = \Carbon\Carbon::parse($validatedData['checkin_date']);
-        $checkoutDate = \Carbon\Carbon::parse($validatedData['checkout_date']);
-        $nights = $checkinDate->diffInDays($checkoutDate); // Number of nights
+        // Get all room numbers and check which ones are already booked for the given dates
+        $bookedRoomNumbers = Booking::where('room_id', $room->id)
+            ->where(function ($query) use ($validatedData) {
+                $query->whereBetween('checkin_date', [$validatedData['checkin_date'], $validatedData['checkout_date']])
+                      ->orWhereBetween('checkout_date', [$validatedData['checkin_date'], $validatedData['checkout_date']])
+                      ->orWhere(function ($query) use ($validatedData) {
+                          $query->where('checkin_date', '<=', $validatedData['checkin_date'])
+                                ->where('checkout_date', '>=', $validatedData['checkout_date']);
+                      });
+            })
+            ->pluck('room_number')
+            ->toArray();
 
-        // Calculate the payment amount
-        $paymentAmount = $roomRate * $nights;
+        // Filter available room numbers
+        $availableRoomNumbers = array_diff($room->room_numbers ?? [], $bookedRoomNumbers);
 
-        // Check for overlapping bookings for the same room and user
-        $overlap = Booking::where('room_id', $validatedData['room_id'])
+        if (empty($availableRoomNumbers)) {
+            return redirect()->back()->withErrors(['no_available_room' => 'No available room numbers for this room during the selected dates.']);
+        }
+
+        // Assign the first available room number
+        $assignedRoomNumber = array_values($availableRoomNumbers)[0];
+
+        // Calculate payment
+        $checkinDate = Carbon::parse($validatedData['checkin_date']);
+        $checkoutDate = Carbon::parse($validatedData['checkout_date']);
+        $nights = $checkinDate->diffInDays($checkoutDate);
+        $paymentAmount = $room->room_rate * $nights;
+
+        // Check for overlapping bookings by the same user
+        $overlap = Booking::where('room_id', $room->id)
             ->where('user_id', auth()->id())
             ->where(function ($query) use ($validatedData) {
                 $query->whereBetween('checkin_date', [$validatedData['checkin_date'], $validatedData['checkout_date']])
@@ -50,18 +65,19 @@ class BookingController extends Controller
             })->exists();
 
         if ($overlap) {
-            return redirect()->back()->withErrors(['overlap' => 'You already have a booking that overlaps with these dates. Check profile for account booking and services information']);
+            return redirect()->back()->withErrors(['overlap' => 'You already have a booking that overlaps with these dates.']);
         }
 
         // Create the booking
         $booking = Booking::create([
             'user_id' => auth()->id(),
-            'room_id' => $validatedData['room_id'],
+            'room_id' => $room->id,
+            'room_number' => $assignedRoomNumber,
             'checkin_date' => $validatedData['checkin_date'],
             'checkout_date' => $validatedData['checkout_date'],
             'guests' => $validatedData['guests'],
             'payment_status' => 'pending',
-            'payment_amount' => $paymentAmount, // Automatically calculate payment_amount
+            'payment_amount' => $paymentAmount,
         ]);
 
         session(['booking_id' => $booking->id]);

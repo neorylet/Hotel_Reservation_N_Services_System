@@ -8,7 +8,6 @@ use App\Models\Room;
 
 class RoomController extends Controller
 {
-    // Display a listing of the rooms
     public function create()
     {
         return view('rooms.create');
@@ -16,7 +15,6 @@ class RoomController extends Controller
 
     public function edit($id)
     {
-        // Retrieve the room by its ID
         $room = Room::findOrFail($id);
         return view('rooms.edit', compact('room'));
     }
@@ -36,28 +34,20 @@ class RoomController extends Controller
     public function showRooms()
     {
         $rooms = Room::all();
-
-        return view('/landing', compact('room'));
+        return view('/landing', compact('rooms'));
     }
 
     public function displayHotelRooms()
-{
-    // Fetch all rooms from the database
-    $rooms = Room::all();
+    {
+        $rooms = Room::all();
+        return view('hotel.hotelrooms', compact('rooms'));
+    }
 
-    // Return the 'hotel.rooms' view with the rooms data
-    return view('hotel.hotelrooms', compact('rooms'));
-}
-
-public function displayHotelHome()
-{
-    // Fetch all rooms from the database
-    $rooms = Room::all();
-
-    // Return the 'hotel.rooms' view with the rooms data
-    return view('hotel.hotelhome', compact('rooms'));
-}
-
+    public function displayHotelHome()
+    {
+        $rooms = Room::all();
+        return view('hotel.hotelhome', compact('rooms'));
+    }
 
     public function store(Request $request)
     {
@@ -65,7 +55,7 @@ public function displayHotelHome()
             'room_name' => 'required|string|max:255',
             'room_type' => 'nullable|string|max:255',
             'room_count' => 'nullable|integer',
-            'room_numbers' => 'nullable|string',
+            'room_numbers' => 'nullable|string', // comma-separated input
             'room_rate' => 'nullable|numeric',
             'capacity' => 'nullable|integer',
             'room_description' => 'nullable|string',
@@ -89,7 +79,9 @@ public function displayHotelHome()
             'room_name' => $request->room_name,
             'room_type' => $request->room_type,
             'room_count' => $request->room_count,
-            'room_numbers' => $request->room_numbers,
+            'room_numbers' => isset($request->room_numbers)
+                ? array_map('trim', explode(',', $request->room_numbers))
+                : [],
             'room_rate' => $request->room_rate,
             'capacity' => $request->capacity,
             'room_description' => $request->room_description,
@@ -100,15 +92,13 @@ public function displayHotelHome()
         return redirect()->route('rooms.index')->with('success', 'Room added successfully.');
     }
 
-
-
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'room_name' => 'required|string|max:255',
             'room_type' => 'nullable|string|max:255',
             'room_count' => 'nullable|integer',
-            'room_numbers' => 'nullable|string',
+            'room_numbers' => 'nullable|string', // comma-separated input
             'room_rate' => 'nullable|numeric',
             'capacity' => 'nullable|integer',
             'room_description' => 'nullable|string',
@@ -123,7 +113,6 @@ public function displayHotelHome()
             if ($room->room_front_image) {
                 Storage::delete('public/' . $room->room_front_image);
             }
-
             $frontImagePath = $request->file('room_front_image')->store('room_images', 'public');
             $room->room_front_image = $frontImagePath;
         }
@@ -133,12 +122,14 @@ public function displayHotelHome()
             foreach ($request->file('room_images') as $image) {
                 $images[] = $image->store('room_images', 'public');
             }
+
             if ($room->room_images) {
                 $oldImages = json_decode($room->room_images);
                 foreach ($oldImages as $oldImage) {
                     Storage::delete('public/' . $oldImage);
                 }
             }
+
             $room->room_images = json_encode($images);
         }
 
@@ -146,7 +137,9 @@ public function displayHotelHome()
             'room_name' => $request->room_name,
             'room_type' => $request->room_type,
             'room_count' => $request->room_count,
-            'room_numbers' => $request->room_numbers,
+            'room_numbers' => isset($request->room_numbers)
+                ? array_map('trim', explode(',', $request->room_numbers))
+                : [],
             'room_rate' => $request->room_rate,
             'capacity' => $request->capacity,
             'room_description' => $request->room_description,
@@ -156,10 +149,9 @@ public function displayHotelHome()
     }
 
     public function destroy($id)
-{
-    $room = Room::findOrFail($id);
-    $room->delete();
-
-    return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
-}
+    {
+        $room = Room::findOrFail($id);
+        $room->delete();
+        return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
+    }
 }
